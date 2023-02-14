@@ -1,0 +1,68 @@
+[tool.poetry]
+name = "apexa-library-integrator"
+version = "0.0.0"
+description = "ApexaIQ library integrations"
+authors = [
+    "ApexaIQ <login@apexaiq.com>"
+]
+license = "GPLv2"
+packages = [
+    { include = "apexa" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.1"
+pandas = "^1.5.1"
+selenium = "^4.6.0"
+diskcache = "^5.4.0"
+pika = "^1.3.1"
+bs4 = "^0.0.1"
+lxml = "^4.9.2"
+html5lib = "^1.1"
+
+[tool.poetry.dev-dependencies]
+requests-mock = "^1"
+flake8 = "^4"
+black = {version = "^21.12b0", allow-prereleases = true}
+pre-commit = "^2.16.0"
+isort = {extras = ["pyproject"], version = "^5.10.1"}
+pytest = "^7"
+testtools = "^2.5.0"
+coverage = "^6.2"
+pylint = "^2.13.8"
+
+[tool.poetry.plugins."apexa-library-integrator.source"]
+#Format:   "configServerName" = "python_module_name:class_name"
+"7-zip" = "apexa.sources.scrappers.seven_zip:SevenZipScraper"
+"idera" = "apexa.sources.scrappers.idera:IDERAScraper"
+"tomitribe" = "apexa.sources.scrappers.tomitribe:TomitribeScraper"
+"gurobi" = "apexa.sources.scrappers.gurobi:GurobiScraper"
+
+[tool.poetry.plugins."apexa-library-integrator.scripts"]
+#Format:   "cli_keyword" = "python_module_name:function_name"
+
+[tool.isort]
+profile = "black"
+
+[tool.pylint.messages_control]
+disable = "W1203, W0703, R0902, R0913, W0406"
+
+[tool.pylint.MASTER]
+ignore-paths = [
+    "tests",
+    "venv",
+    "build",
+    "dist",
+    "run.py",
+]
+fail-under = "9.95"
+include-naming-hint = "y"
+jobs = "50"
+fail-on = "F,E"
+persistent = "y"
+max-line-length = "88"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonrqy.api"
